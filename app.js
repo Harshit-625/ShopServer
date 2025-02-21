@@ -1,5 +1,6 @@
 const express = require("express")
 const app = express()
+const cors = require('cors')
 const bodyParser = require("body-parser") 
 const morgan = require("morgan")
 const mongoose = require("mongoose")
@@ -18,11 +19,25 @@ const orderRouter = require("./routers/orders")
 
 
 //middleware
+app.use(cors({
+  origin: '*', 
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
+app.options('*', cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 app.use('/public/uploads', express.static(__dirname + '/public/uploads'))
 app.use(bodyParser.json())
 app.use(morgan('tiny'))
 app.use(errorHandler)
 app.use(authJwt())
+
+
 
 
 //Routes

@@ -106,7 +106,7 @@ router.post("/login", async (req, res) => {
   const secret = process.env.SECRET
 
   if(!user){
-    return res.status(500).send('user not Found')
+    return res.status(500).send('User not Found')
   }
 
   if(user && bcrypt.compareSync(req.body.password , user.passwordHash)){
